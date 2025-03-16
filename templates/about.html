@@ -1,9 +1,13 @@
 <!DOCTYPE html>
     <html>
         <head>
+            {% if title %}
             <title>
-                about page
+                about1
             </title>
+            {% else %}
+            <title>about2</title>
+            {% endif %}
             <style>
                 body{
                     display:flex;
