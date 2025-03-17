@@ -1,35 +1,4 @@
-<!DOCTYPE html>
-    <html>
-        <head>
-            {% if title %}
-            <title>
-                about1
-            </title>
-            {% else %}
-            <title>about2</title>
-            {% endif %}
-            <style>
-                body{
-                    display:flex;
-                    justify-content:center;
-                    align-items:center;
-                    height:100vh;
-                }
-               #a12{
-                   background-color:lightblue;
-                   width:500px;
-                   height:200px;
-                   display:flex;
-                   text-align:center;
-                   justify-content:center;
-                   align-items:center;
-                   border:2px solid black;
-                }
-            </style>
-        </head>
-        <body>
-            <div id ="a12">
-                <h1>your data is successfully stored</h1>
-            </div>
-        </body>
-    </html>
+{% extends "layout.html" %}
+    {% block content %}
+        <h1><strong>About Page</strong></h1>
+    {% endblock content %}
