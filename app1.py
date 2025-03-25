@@ -35,12 +35,13 @@ def register():
     form=RegistrationForm()
     if form.validate_on_submit():
         flash(f'Account created for {form.username.data}','success')
+        # print(form.password.data)
         return redirect(url_for('index'))
 
     else:
         return render_template('Register.html',title='Register',form=form)
 
-@app.route('/login')
+@app.route('/login',methods=['POST','GET'])
 def login():
     form=LoginForm()
     return render_template('Login.html',title='Login',form=form)
