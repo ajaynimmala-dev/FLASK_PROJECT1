@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField,FileAllowed
-from wtforms import StringField,PasswordField,SubmitField,BooleanField
+from wtforms import StringField,PasswordField,SubmitField,BooleanField,TextAreaField
 from wtforms.validators import DataRequired,Length,Email,EqualTo,ValidationError
 from app.models import User
 from flask_login import current_user
@@ -40,7 +40,7 @@ class UpdateAccountForm(FlaskForm):
 
     email = StringField('Email',validators = [DataRequired(),Email()])
 
-    picture = FileField('Update Profile Picture',validators = [FileAllowed(['jpg','png'])])
+    picture = FileField('Update Profile Picture',validators = [FileAllowed(['jpg','png','jpeg'])])
 
     submit = SubmitField('Update')
 
@@ -51,7 +51,13 @@ class UpdateAccountForm(FlaskForm):
                 raise ValidationError('That username is already exists!')
 
     def validate_email(self,email):
-        if email.data != current_user.username:
+        if email.data != current_user.email:
             user = User.query.filter_by(email = email.data).first()
             if user:
                 raise ValidationError('That email is already exists!')
+
+
+class PostForm(FlaskForm):
+    title = StringField('Title',validators=[DataRequired()])
+    content = TextAreaField('Content',validators=[DataRequired()])
+    submit = SubmitField('submit')
