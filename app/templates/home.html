@@ -2,13 +2,14 @@
 {% block content %}
     {% for post in posts %}
         <article class="media content-section">
+            <img class="rounded-circle article-img" src="{{ url_for('static',filename='profile_pics/'+ post.author.image_file) }}"/>
         <div class="media-body">
         <div class="article-metadata">
-          <a class="mr-2" href="#">{{ post['author'] }}</a>
-          <small class="text-muted">{{ post['title'] }}</small>
+          <a class="mr-2" href="#">{{ post.author.username }}</a>
+          <small class="text-muted">{{ post.title }}</small>
         </div>
-        <h2><a class="article-title" href="#">{{ post['sontent'] }}</a></h2>
-        <p class="article-content">{{ post['date_posted'] }}</p>
+        <h2><a class="article-title" href="#">{{ post.content }}</a></h2>
+        <p class="article-content">{{ post.date_posted.strftime('%y-%m-%d') }}</p>
         </div>
         </article>
     {% endfor %}
