@@ -8,14 +8,14 @@ from PIL import Image
 
 @app.route('/',methods=['GET','POST'])
 def index():
-    posts = Post.query.all()
+    # pages started from index 1
+    page = request.args.get('page',1,type=int)
+    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page = page,per_page = 2)
     return render_template('home.html',posts=posts,title='website design')
-
 
 @app.route('/about')
 def about():
     return render_template('about.html',title='abcd')
-
 
 
 @app.route('/register',methods=['POST','GET'])
@@ -54,8 +54,6 @@ def login():
         else:
             return render_template('Login.html',title='Login',form=form)
 
-
-
 @app.route("/logout")
 def logout():
     logout_user()
@@ -71,7 +69,6 @@ def save_picture(form_picture):
     i.thumbnail(output_size)
     i.save(picture_path)
     return picture_fn
-
 
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
@@ -91,8 +88,6 @@ def account():
         form.email.data = current_user.email
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('account.html', title = 'Account',image_file = image_file, form = form)
-
-
 
 @app.route("/post/new",methods = ['GET','POST'])
 @login_required
@@ -144,3 +139,15 @@ def delete_post(post_id):
         db.session.commit()
         flash('Your Post Has Been Deleted','success')
         return redirect(url_for('index'))
+
+
+
+@app.route('/user/<string:username>',methods=['GET','POST'])
+def user_posts(username):
+    # pages started from index 1
+    page = request.args.get('page',1,type=int)
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = (Post.query.filter_by(author=user)\
+             .order_by(Post.date_posted.desc())\
+             .paginate(page = page,per_page = 2))
+    return render_template('user_posts.html',posts=posts,title='{{ username }} posts',user=user)
