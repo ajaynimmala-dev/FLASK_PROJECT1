@@ -1,8 +1,9 @@
 import os
 import json
 
-with open('/etc/config.json') as config_file:
-    config = json.load(config_file)
+if os.path.exists('/etc/config.json'):
+    with open('/etc/config.json') as config_file:
+        config = json.load(config_file)
 
 class Config:
     SECRET_KEY = config.get('SECRET_KEY') or  'dev_secret_key'
