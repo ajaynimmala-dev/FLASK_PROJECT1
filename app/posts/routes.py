@@ -1,6 +1,11 @@
+import os
+import uuid
+
 from flask import (render_template, url_for, flash,
-                   redirect, request, abort, Blueprint)
+                   redirect, request, abort, Blueprint, current_app)
 from flask_login import current_user, login_required
+from werkzeug.utils import secure_filename
+
 from app import db
 from app.models import Post
 from app.posts.forms import PostForm
@@ -13,7 +18,15 @@ posts = Blueprint('posts', __name__)
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data, content=form.content.data, author=current_user)
+        image_filename = None
+        if form.photo.data:
+            file = form.photo.data
+            filename = secure_filename(file.filename)
+            unique_filename = f"{uuid.uuid4().hex}_{filename}"
+            file_path = os.path.join(current_app.root_path, 'static/posts', unique_filename)
+            file.save(file_path)
+            image_filename = unique_filename
+        post = Post(title=form.title.data, content=form.content.data, author=current_user,image_file=image_filename)
         db.session.add(post)
         db.session.commit()
         flash('Your post has been created!', 'success')
