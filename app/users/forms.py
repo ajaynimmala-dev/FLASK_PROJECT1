@@ -9,6 +9,8 @@ from app.models import User
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
 
+    register_number = StringField('RegisterNumber', validators=[DataRequired(), Length(min = 8,max = 8)])
+
     email = StringField('Email', validators=[DataRequired(), Email()])
 
     available_departments = [("CS", "CSE"), ("DS", "DataScience")]
