@@ -7,7 +7,7 @@ from wtforms.validators import DataRequired
 class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     content = TextAreaField('Content', validators=[DataRequired()])
-    photo = FileField('Add a Photo', validators=[FileAllowed(['jpeg','jpg', 'png', 'pdf', 'docx'])])
+    photo = FileField('Add a Photo/certificates', validators=[FileAllowed(['jpeg','jpg', 'png', 'pdf', 'docx'])])
     submit = SubmitField('submit')
 
 class LostItemForm(FlaskForm):
