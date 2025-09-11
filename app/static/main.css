@@ -50,6 +50,20 @@ a.article-title:hover {
   width: 65px;
   margin-right: 16px;
 }
+.post-img {
+  max-width: 300px;  /* expands up to 600px */
+  width: 100%;       /* responsive */
+  height: 300px;      /* keeps aspect ratio */
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+.lostfound-img {
+  max-width: 250px;
+  height: auto;
+  margin-right: 16px;
+  border-radius: 8px;
+}
 
 .article-metadata {
   padding-bottom: 1px;

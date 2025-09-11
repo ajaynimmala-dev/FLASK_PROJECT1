@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h1 class="mb-4">Upcoming Events</h1>
+
+  {% for event in events %}
+    <article class="media content-section">
+      {# Event image with fallback #}
+      {% if event.image_file %}
+        <img class="article-img" src="{{ url_for('static', filename=event.image_file) }}">
+      {% else %}
+        <img class="article-img" src="{{ url_for('static', filename='events/default.png') }}">
+      {% endif %}
+
+      <div class="media-body">
+        <div class="article-metadata">
+          <small class="text-muted">{{ event.date }}</small> |
+          <small class="text-muted">{{ event.location }}</small>
+        </div>
+        <h2 class="article-title">{{ event.title }}</h2>
+        <p class="article-content">{{ event.description }}</p>
+      </div>
+    </article>
+  {% else %}
+    <p>No events available right now.</p>
+  {% endfor %}
+{% endblock content %}

@@ -10,7 +10,7 @@
             </div>
             <h2><a class="article-title" href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a></h2>
               {% if post.image_file %}
-              <img class="article-img" src="{{ url_for('static', filename='posts/' + post.image_file) }}">
+              <img class="article-img post-img "  src="{{ url_for('static', filename='posts/' + post.image_file) }}">
             {% endif %}
             <p class="article-content">{{ post.content }}</p>
           </div>
