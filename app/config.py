@@ -9,7 +9,7 @@ if os.path.exists('/etc/config.json'):
 
 class Config:
     SECRET_KEY = config.get('SECRET_KEY') or  'dev_secret_key'
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL") or 'postgresql://neondb_owner:npg_p4RmlZE9rInH@ep-lively-unit-a149gzmw-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
     MAIL_SERVER = 'smtp.googlemail.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
