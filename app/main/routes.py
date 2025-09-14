@@ -5,7 +5,7 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from werkzeug.utils import secure_filename
-
+from app import db
 from app.posts.forms import LostItemForm
 
 main = Blueprint('main', __name__)
@@ -94,4 +94,5 @@ def new_lost_item():
         return redirect(url_for('main.home'))
 
     return render_template("lost_and_found.html", form=form)
+
 
