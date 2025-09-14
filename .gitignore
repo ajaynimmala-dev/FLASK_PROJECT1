@@ -2,4 +2,6 @@
 .venv/*
 lib
 bin
+*.db
+
 
