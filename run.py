@@ -2,9 +2,7 @@ from app import create_app,db
 
 app = create_app()
 
-@app.before_first_request
-#TODO this needs to be removed later
-def create_table():
+with app.app_context():
     db.create_all()
 
 if __name__ == '__main__':
