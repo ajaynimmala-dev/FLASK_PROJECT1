@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1 class="mb-4">Emergency Alerts</h1>
+
+{% for alert in alerts %}
+<div class="card shadow-sm p-3 mb-3 bg-white rounded border">
+    <div class="d-flex justify-content-between align-items-center">
+        <h5 class="text-danger">{{ alert.title }}</h5>
+        <small>{{ alert.date }}</small>
+    </div>
+    <p>{{ alert.description }}</p>
+    <p>
+        Severity:
+        {% if alert.severity == "High" %}
+            <span class="badge badge-danger">{{ alert.severity }}</span>
+        {% elif alert.severity == "Moderate" %}
+            <span class="badge badge-warning">{{ alert.severity }}</span>
+        {% else %}
+            <span class="badge badge-success">{{ alert.severity }}</span>
+        {% endif %}
+    </p>
+</div>
+{% else %}
+<p>No emergency alerts at the moment.</p>
+{% endfor %}
+{% endblock content %}
