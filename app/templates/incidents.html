@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h1 class="mb-4 text-center">Latest Reported Incidents</h1>
+
+  <div class="row">
+    {% for incident in incidents %}
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card shadow-lg border-0 rounded-3 h-100 incident-card">
+          {% if incident.image %}
+            <img src="{{ incident.image }}" class="card-img-top rounded-top" alt="Incident Image">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title fw-bold">{{ incident.title }}</h5>
+            <span class="badge bg-primary mb-2">{{ incident.location }}</span>
+            <p class="card-text text-muted">{{ incident.description }}</p>
+            <p class="mb-0"><strong>📞 Contact:</strong> {{ incident.contact }}</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock content %}

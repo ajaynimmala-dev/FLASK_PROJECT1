@@ -13,21 +13,24 @@
     {% if title %}
         <title>Rvr Students Blog - {{ title }}</title>
     {% else %}
-        <title>Rvr Students Blog</title>
+        <title>Disaster Training</title>
     {% endif %}
 </head>
 <body>
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
-          <a class="navbar-brand mr-4" href="/">RVR Students Blog</a>
+          <a class="navbar-brand mr-4" href="/">Disaster Training</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a>
-              <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a>
+              <a class="nav-item nav-link" href="{{ url_for('main.training') }}">Training</a>
+                <a class="nav-item nav-link" href="{{ url_for('main.weather') }}">Weather</a>
+                <a class="nav-item nav-link" href="{{ url_for('main.alerts') }}">Emergency Alerts</a>
+
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
@@ -63,9 +66,9 @@
             <h3>Our Sidebar</h3>
             <p class='text-muted'>You can put any information here you'd like.
               <ul class="list-group">
-                <li class="list-group-item list-group-item-light"><a href='/lost-and-found'>Lost and Found</a></li>
-                <li class="list-group-item list-group-item-light"><a href='/announcements'>Announcements</a></li>
-                <li class="list-group-item list-group-item-light"><a href='/events'>events</a></li>
+                <li class="list-group-item list-group-item-light"><a href='/incidents'>Latest incidents</a></li>
+                <li class="list-group-item list-group-item-light"><a href='/my_progress'>Progress</a></li>
+                <li class="list-group-item list-group-item-light"><a href='/leaderboard'>Leaderboard</a></li>
               </ul>
             </p>
           </div>

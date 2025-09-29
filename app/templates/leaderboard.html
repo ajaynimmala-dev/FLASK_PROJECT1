@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1 class="mb-4 text-center">Student Leaderboard</h1>
+
+<div class="row">
+  {% for student in students %}
+    <div class="col-md-6 col-lg-4 mb-4">
+      <div class="card shadow-sm rounded-3 h-100 leaderboard-card">
+        <div class="card-body text-center">
+          <img src="{{ url_for('static', filename=student.profile_pic or 'profile_pics/default.jpg') }}"
+               class="rounded-circle mb-2" width="80" alt="Student Pic">
+
+          <h5 class="card-title fw-bold">{{ student.name }}</h5>
+          <p class="mb-1"><strong>Class:</strong> {{ student.student_class }}</p>
+          <p class="mb-1"><strong>Score:</strong> {{ student.score }}%</p>
+          <p class="mb-1"><strong>Attendance:</strong> {{ student.attendance }}%</p>
+          <p class="mb-1"><strong>Training Completion:</strong> {{ student.training_completion }}%</p>
+
+          <span class="badge badge-{{ student.rank_color }}">Rank: {{ student.rank }}</span>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock content %}

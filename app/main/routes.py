@@ -1,4 +1,6 @@
 from flask import Blueprint, current_app
+from flask_login import login_required
+
 from app.models import Post
 import os
 import secrets
@@ -10,6 +12,67 @@ from app.posts.forms import LostItemForm
 
 main = Blueprint('main', __name__)
 
+training_schedule = [
+    {
+        'number': 1,
+        'title': 'Fire Safety',
+        'videos': [
+            {'title': 'Fire Extinguisher Basics', 'link': 'https://youtu.be/yodLMfOZNvA?si=vPgKTRuhiTw0VyZq'},
+            {'title': 'Evacuation Drill Demo', 'link': 'https://youtu.be/3aLWlDY_G9w?si=k5pN4XrfHniHY0K7'}
+        ],
+        'quiz_link': '/quiz/week1'
+    },
+    {
+        'number': 2,
+        'title': 'Earthquake Preparedness',
+        'videos': [
+            {'title': 'Drop, Cover, Hold', 'link': 'https://youtu.be/BLEPakj1YTY?si=OG11GMl3eLArHqx7'},
+            {'title': 'Earthquake Safety Checklist', 'link': 'https://youtu.be/hWSu4l1RxLg?si=PbdZn4_roOI2-L8i'}
+        ],
+        'quiz_link': '/quiz/week2'
+    },
+    {
+        'number': 3,
+        'title': 'Flood Safety',
+        'videos': [
+            {'title': 'Preparing for Floods', 'link': 'https://youtu.be/43M5mZuzHF8?si=SAHbMP817onWbeaf'},
+            {'title': 'Evacuation Routes', 'link': 'https://youtu.be/3E4z-mEAPoo?si=KyxGy2ZOw21-qy4I'}
+        ],
+        'quiz_link': '/quiz/week3'
+    }
+]
+
+from flask import Blueprint, render_template
+
+main = Blueprint('main', __name__)
+
+@main.route("/incidents")
+def show_incidents():
+    # Dummy incident data (no database)
+    incidents = [
+    {
+        "title": "Earthquake Tremors Felt",
+        "location": "Delhi - Connaught Place",
+        "description": "Mild tremors were reported at 7:30 AM. No damage reported so far.",
+        "contact": "Delhi Disaster Helpline - 1077",
+        "image": "https://via.placeholder.com/400x200"
+    },
+    {
+        "title": "Flooding in Residential Area",
+        "location": "Mumbai - Andheri East",
+        "description": "Heavy rains caused waterlogging in several parts of the city.",
+        "contact": "Mumbai Municipal Helpline - 1916",
+        "image": "https://via.placeholder.com/400x200"
+    },
+    {
+        "title": "Fire at College Campus",
+        "location": "Chennai - Anna Nagar",
+        "description": "A small fire broke out in the library building. Fire services controlled the situation.",
+        "contact": "Chennai Fire Dept - 101",
+        "image": "https://via.placeholder.com/400x200"
+    }]
+    return render_template("incidents.html", incidents=incidents)
+
 
 @main.route("/")
 @main.route("/home")
@@ -19,9 +82,9 @@ def home():
     return render_template('home.html', posts=posts)
 
 
-@main.route("/about")
-def about():
-    return render_template('about.html', title='About')
+@main.route("/training")
+def training():
+    return render_template('training.html', title='Training',training_schedule=training_schedule)
 
 @main.route("/events")
 def events():
@@ -96,3 +159,107 @@ def new_lost_item():
     return render_template("lost_and_found.html", form=form)
 
 
+@main.route("/my_progress")
+@login_required
+def my_progress():
+    student_progress = {
+        "name": "Aarav Sharma",
+        "student_class": "10th Grade",
+        "attendance": 92,
+        "exam_score": 85,
+        "training_completion": 70,
+        "points": 120,
+        "level": 3,
+        "coins": 250,
+        "badges": [
+            {"name": "Fire Safety Expert", "earned": True},
+            {"name": "Flood Awareness Champion", "earned": False},
+        ],
+        "status": "On Track",  # Status text
+        "status_color": "success",  # Bootstrap badge color: success, warning, danger
+        "profile_pic": "profile_pics/student1.jpg"
+    }
+    return render_template("progress.html",student=student_progress)
+
+@main.route("/leaderboard")
+def leaderboard():
+    students = [
+        {
+            "name": "Aarav Sharma",
+            "student_class": "10th Grade",
+            "score": 95,
+            "attendance": 92,
+            "training_completion": 80,
+            "rank": 1,
+            "rank_color": "success",   # green badge
+            "profile_pic": "profile_pics/student1.jpg"
+        },
+        {
+            "name": "Sneha Patel",
+            "student_class": "9th Grade",
+            "score": 88,
+            "attendance": 85,
+            "training_completion": 70,
+            "rank": 2,
+            "rank_color": "primary",   # blue badge
+            "profile_pic": "profile_pics/student2.jpg"
+        },
+        {
+            "name": "Rohan Verma",
+            "student_class": "11th Grade",
+            "score": 80,
+            "attendance": 78,
+            "training_completion": 60,
+            "rank": 3,
+            "rank_color": "warning",   # yellow badge
+            "profile_pic": None
+        }
+    ]
+    return render_template("leaderboard.html", students=students)
+
+from flask import render_template
+from datetime import datetime
+
+@main.route("/weather")
+@login_required
+def weather():
+    # Example dummy data
+    forecast = {
+        "city": "Guntur",
+        "date": datetime.now().strftime("%d %b %Y"),
+        "temperature": "34°C",
+        "condition": "Sunny",
+        "disaster_risk": "Low flood risk",
+        "alerts": ["High UV Index", "Air Quality Moderate"]
+    }
+    return render_template("weather.html", forecast=forecast)
+
+from flask import render_template
+from flask_login import login_required
+from datetime import datetime
+
+@main.route("/alerts")
+@login_required
+def alerts():
+    # Dummy emergency alerts
+    emergency_alerts = [
+        {
+            "title": "Cyclone Warning",
+            "description": "Cyclone expected in the coastal areas tomorrow. Stay indoors and follow safety instructions.",
+            "date": datetime.now().strftime("%d %b %Y %H:%M"),
+            "severity": "High"
+        },
+        {
+            "title": "Flood Alert",
+            "description": "Heavy rains expected in Delhi-NCR. Avoid low-lying areas and follow evacuation protocols.",
+            "date": datetime.now().strftime("%d %b %Y %H:%M"),
+            "severity": "Moderate"
+        },
+        {
+            "title": "Heatwave Advisory",
+            "description": "Temperature may rise above 45°C. Stay hydrated and avoid outdoor activities during peak hours.",
+            "date": datetime.now().strftime("%d %b %Y %H:%M"),
+            "severity": "Low"
+        }
+    ]
+    return render_template("alerts.html", alerts=emergency_alerts)

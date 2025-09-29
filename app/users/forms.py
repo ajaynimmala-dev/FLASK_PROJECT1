@@ -13,7 +13,7 @@ class RegistrationForm(FlaskForm):
 
     email = StringField('Email', validators=[DataRequired(), Email()])
 
-    available_departments = [("CS", "CSE"), ("DS", "DataScience"),("AIML","Artificial Intelligence and MachineLearning"),("MEC","Mechanical"),("Civ","Civil"),("CSBS","Business Systems"),("Iot","Internet of Things"),("Ece","Electronics and communications Engineering"),("EEE","Electrical and Electronics Engineering"),("IT","InformationTechnology"),("Che","Chemical")]
+    available_departments = [("student","Student"),("Admin","Admin")]
 
     department = SelectField("Department", validators=[DataRequired()], choices=available_departments)
 
