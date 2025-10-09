@@ -1,5 +1,5 @@
 from flask import Blueprint, current_app
-from flask_login import current_user
+from flask_login import current_user, login_required
 
 from app.models import Post, LostFound
 import os
@@ -78,6 +78,7 @@ def announcements():
     return render_template("announcements.html", announcements=sample_announcements)
 
 @main.route("/lost-and-found", methods=['GET', 'POST'])
+@login_required
 def new_lost_item():
     form = LostItemForm()
     if form.validate_on_submit():
@@ -103,5 +104,12 @@ def new_lost_item():
         return redirect(url_for('main.home'))
 
     return render_template("lost_and_found.html", form=form)
+
+
+@main.route("/view-lost-items")
+@login_required
+def view_lost_items():
+    items = LostFound.query.filter_by(status='Lost').order_by(LostFound.date_reported.desc()).all()
+    return render_template("view_lost_items.html", items=items)
 
 

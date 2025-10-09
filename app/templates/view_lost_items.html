@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2 class="mb-4 text-center">Recently Reported Lost Items</h2>
+
+{% if items %}
+  <div class="row">
+    {% for item in items %}
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-sm">
+          {% if item.image_file %}
+            <img src="{{ url_for('static', filename='lost_found/' + item.image_file) }}"
+                 class="card-img-top"
+                 style="max-height: 200px; object-fit: cover;">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ item.title }}</h5>
+            <p class="card-text">
+              <strong>Location:</strong> {{ item.location }}<br>
+              {{ item.description }}
+            </p>
+            <p class="text-muted">
+              Reported on {{ item.date_reported.strftime('%Y-%m-%d') }}
+            </p>
+            <p><strong>Contact:</strong> {{ item.contact }}</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="text-center">No lost items have been reported yet.</p>
+{% endif %}
+{% endblock %}
