@@ -47,3 +47,17 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
+
+class LostFound(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    location = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    contact = db.Column(db.String(120), nullable=False)
+    image_file = db.Column(db.String(120), nullable=True)
+    date_reported = db.Column(db.DateTime, default=datetime.utcnow)
+    status = db.Column(db.String(20), default='Lost')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"<LostFound {self.title} - {self.status}>"
