@@ -1,5 +1,7 @@
 from flask import Blueprint, current_app
-from app.models import Post
+from flask_login import current_user
+
+from app.models import Post, LostFound
 import os
 import secrets
 from PIL import Image
@@ -89,7 +91,14 @@ def new_lost_item():
             i = Image.open(form.image_file.data)
             i.thumbnail(output_size)
             i.save(filepath)
-
+        new_item  = LostFound(title=form.title.data,
+            location=form.location.data,
+            description=form.description.data,
+            contact=form.contact.data,
+            image_file=filename,
+            user_id=current_user.id)
+        db.session.add(new_item)
+        db.session.commit()
         flash(f"Lost item '{form.title.data}' has been reported!", "success")
         return redirect(url_for('main.home'))
 
