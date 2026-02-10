@@ -9,22 +9,28 @@ from app.models import User
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=40)])
 
-    register_number = StringField('RegisterNumber', validators=[DataRequired(), Length(min = 8,max = 8)])
+    register_number = StringField('PhoneNumber', validators=[DataRequired(), Length(min = 10,max = 10)])
 
     email = StringField('Email', validators=[DataRequired(), Email()])
 
-    available_departments = [("CS", "CSE"), ("DS", "DataScience"),("AIML","Artificial Intelligence and MachineLearning"),("MEC","Mechanical"),("Civ","Civil"),("CSBS","Business Systems"),("Iot","Internet of Things"),("Ece","Electronics and communications Engineering"),("EEE","Electrical and Electronics Engineering"),("IT","InformationTechnology"),("Che","Chemical")]
+    available_departments = [("patient", "Patient"), ("doctor","Doctor")]
 
-    department = SelectField("Department", validators=[DataRequired()], choices=available_departments)
+    department = SelectField("Mode", validators=[DataRequired()], choices=available_departments)
 
     password = PasswordField('Password', validators=[DataRequired()])
 
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
 
+    available_doctors = [ ("",""),("cardiologist","Cardiologist"),("dermatologist","Dermatologist"),("neurologist","Neurologist")]
+
+    doctor_type = SelectField("DoctorType",choices=available_doctors)
+
     submit = SubmitField('Sign Up')
 
     def validate_username(self, username):
+        # print("hello")
         user = User.query.filter_by(username=username.data).first()
+        # print("bye")
         if user:
             raise ValidationError('That username is already exists!')
 

@@ -18,6 +18,7 @@ class User(db.Model, UserMixin):
     department = db.Column(db.String(20),unique=False,nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
+    type = db.Column(db.String(60),nullable=True)
     posts = db.relationship('Post', backref='author', lazy=True)
 
     def get_reset_token(self, expires_sec=1800):
